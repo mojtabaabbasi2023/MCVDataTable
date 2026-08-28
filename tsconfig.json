@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "strict": true,
+    "jsx": "preserve",
+    "declaration": true,
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "types": ["vue"]
+  },
+  "include": ["*.ts", "*.d.ts", "components/**/*.vue", "composables/**/*.ts", "utils/**/*.ts"]
+}
