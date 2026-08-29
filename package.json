@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "description": "A Vuetify 3 data table component with column visibility, resizing, and drag-and-drop column reordering.",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mojtabaabbasi2023/MCVDataTable.git"
+  },
   "main": "./dist/mcv-data-table.umd.cjs",
   "module": "./dist/mcv-data-table.js",
   "types": "./dist/index.d.ts",
