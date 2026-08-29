@@ -1,6 +1,6 @@
 {
   "name": "mcv-data-table",
-  "version": "0.1.3",
+  "version": "0.1.0",
   "description": "A Vuetify 3 data table component with column visibility, resizing, and drag-and-drop column reordering.",
   "type": "module",
   "main": "./dist/mcv-data-table.umd.cjs",
