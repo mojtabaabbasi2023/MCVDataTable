@@ -2,6 +2,10 @@
 
 A Vue 3 + Vuetify 3 data table component based on `v-data-table` with column visibility, column resizing, and drag-and-drop column reordering.
 
+## Demo
+
+https://mojtabaabbasi2023.github.io/MCVDataTable/
+
 ## Requirements
 
 - Vue `^3.5.0`
