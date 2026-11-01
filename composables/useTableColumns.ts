@@ -27,6 +27,25 @@ export function useTableColumns<T extends TableColumnWithVisibility = TableColum
     return [...fixedHeaders, ...visible, ...fixedEndHeaders];
   });
 
+  // انتخاب / عدم انتخاب همه ستون‌ها
+  const allColumnsSelected = computed(() =>
+    toggleHeaders.value.every(col => visibleColumns.value.includes(col.key))
+  );
+
+  const someColumnsSelected = computed(() =>
+    !allColumnsSelected.value &&
+    toggleHeaders.value.some(col => visibleColumns.value.includes(col.key))
+  );
+
+  function toggleAllColumns() {
+    if (allColumnsSelected.value) {
+      visibleColumns.value = [];
+    } else {
+      const allKeys = toggleHeaders.value.map(col => col.key);
+      visibleColumns.value = [...new Set([...visibleColumns.value, ...allKeys])];
+    }
+  }
+
   function getHeaderCells() {
     const table = tableRef?.value?.$el?.querySelector('table')
 
@@ -64,6 +83,9 @@ export function useTableColumns<T extends TableColumnWithVisibility = TableColum
 
   return {
     visibleColumns,
-    filteredHeaders
+    filteredHeaders,
+    allColumnsSelected,
+    someColumnsSelected,
+    toggleAllColumns
   };
 }
