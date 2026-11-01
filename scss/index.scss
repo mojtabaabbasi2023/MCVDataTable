@@ -118,6 +118,30 @@
   }
 }
 
+.vlist-small__menu {
+  width: 320px;
+  background: rgb(var(--v-theme-surface));
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.vlist-small__toolbar {
+  .v-checkbox {
+    min-height: 32px;
+    margin-top: 0;
+  }
+
+  .v-field {
+    font-size: 0.9em;
+    background-color: #fff;
+  }
+
+  .v-field__overlay {
+    background-color: #fff;
+    opacity: 1;
+  }
+}
+
 .mc-vdata-table__drag-preview {
   align-items: center;
   background: rgb(var(--v-theme-surface));

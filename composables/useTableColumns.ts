@@ -13,11 +13,23 @@ export function useTableColumns<T extends TableColumnWithVisibility = TableColum
   tableRef?: Ref,
   defaultWidth = 200,
 ) {
+  const columnSearch = ref('');
   const visibleColumns: Ref<string[]> = ref(
     toggleHeaders.value
       .filter(header => !header.hide)
       .map(header => header.key)
   );
+
+  const filteredToggleHeaders = computed<T[]>(() => {
+    const query = columnSearch.value.trim().toLowerCase();
+
+    if (!query)
+      return toggleHeaders.value;
+
+    return toggleHeaders.value.filter(column =>
+      String(column.title ?? column.key).toLowerCase().includes(query)
+    );
+  });
 
   const filteredHeaders = computed<T[]>(() => {
     const visible = toggleHeaders.value.filter((h) =>
@@ -82,6 +94,8 @@ export function useTableColumns<T extends TableColumnWithVisibility = TableColum
   );
 
   return {
+    columnSearch,
+    filteredToggleHeaders,
     visibleColumns,
     filteredHeaders,
     allColumnsSelected,

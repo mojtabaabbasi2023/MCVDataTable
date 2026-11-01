@@ -19,15 +19,26 @@
               </v-btn>
             </template>
 
-            <!-- لیست ستون‌ها -->
-            <v-list class="vlist-small" :height="300">
-              <v-list-item v-for="(col, index) in toggleHeaders" :key="col.key">
-                <v-divider v-if="index > 0 && toggleHeaders[index - 1].group !== col.group" class="my-2" />
-                <v-checkbox v-model="visibleColumns" :label="col.title" :value="col.key" hide-details density="compact"
-                  :disabled="col.disabled" />
-              </v-list-item>
-            </v-list>
+            <div class="vlist-small__menu bg-surface rounded elevation-8" :style="{ width: menuWidth }">
+              <!-- فیلتر + انتخاب همه (خارج از لیست) -->
+              <div class="vlist-small__toolbar d-flex align-center ga-2 px-4 pt-2">
+                <v-checkbox :model-value="allColumnsSelected" :indeterminate="someColumnsSelected" hide-details
+                  density="compact" class="mt-0 flex-shrink-0" @update:model-value="toggleAllColumns" />
+                <v-text-field v-model="columnSearch" prepend-inner-icon="mdi-magnify" hide-details density="compact"
+                  clearable variant="solo-filled" class="flex-grow-1" placeholder="جستجو..." />
 
+              </div>
+              <v-divider class="mt-2" />
+
+              <!-- لیست ستون‌ها -->
+              <v-list class="vlist-small" :height="300">
+                <v-list-item v-for="(col, index) in filteredToggleHeaders" :key="col.key">
+                  <v-divider v-if="index > 0 && filteredToggleHeaders[index - 1].group !== col.group" class="my-2" />
+                  <v-checkbox v-model="visibleColumns" :label="col.title" :value="col.key" hide-details
+                    density="compact" :disabled="col.disabled" />
+                </v-list-item>
+              </v-list>
+            </div>
 
           </v-menu>
 
@@ -45,9 +56,9 @@
             'header-content--drop-target': draggedColumnKey && draggedColumnKey !== column.key,
             'header-content--drag-over': dragOverColumnKey === column.key,
           }
-        ]" draggable="true" @dragstart="onDragStart($event, String(column.key), column.title)" @dragover.prevent="onDragEnter(String(column.key))"
-          @dragenter="onDragEnter(String(column.key))" @dragleave="onDragLeave(String(column.key))"
-          @drop="onDrop(String(column.key))" @dragend="onDragEnd">
+        ]" draggable="true" @dragstart="onDragStart($event, String(column.key), column.title)"
+          @dragover.prevent="onDragEnter(String(column.key))" @dragenter="onDragEnter(String(column.key))"
+          @dragleave="onDragLeave(String(column.key))" @drop="onDrop(String(column.key))" @dragend="onDragEnd">
           <span>
             {{ column.title }}
           </span>
@@ -55,8 +66,8 @@
           <span v-if="
             filteredHeaders[index]?.resizable !== false
           " :class="['resize-handle', `resize-handle--${props.resizeDirection}`]" @mousedown="
-              startResize($event, index)
-              " />
+            startResize($event, index)
+            " />
         </div>
 
 
@@ -121,6 +132,7 @@ interface Props {
   showExpand?: boolean
   singleExpand?: boolean
   rowProps?: (context: RowPropsContext) => Record<string, any>
+  menuWidth?: number | string
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -135,6 +147,7 @@ const props = withDefaults(defineProps<Props>(), {
   tableClass: 'elevation-1 report-table',
   showExpand: false,
   singleExpand: true,
+  menuWidth: 320,
 })
 
 const toggleHeaders = ref<GenericTableColumn[]>([...props.headers]);
@@ -143,7 +156,15 @@ const tableHeaders = ref<GenericTableColumn[]>([...props.headers]);
 const expanded = ref([])
 const tableRef = ref<any>(null)
 // 👇 استفاده از کامپوزیبل
-const { visibleColumns, filteredHeaders } = useTableColumns(
+const {
+  columnSearch,
+  filteredToggleHeaders,
+  visibleColumns,
+  filteredHeaders,
+  allColumnsSelected,
+  someColumnsSelected,
+  toggleAllColumns
+} = useTableColumns(
   props.fixedHeaders,
   tableHeaders,
   props.fixedEndHeaders,
