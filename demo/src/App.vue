@@ -32,6 +32,7 @@
           :show-expand="false"
           class="demo-table"
           resize-direction="ltr"
+          menu-width="420"
         >
           <template #item.status="{ item }">
             <v-chip :color="statusColor(item.status)" size="small" variant="flat">
