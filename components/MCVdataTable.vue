@@ -25,7 +25,7 @@
                 <v-checkbox :model-value="allColumnsSelected" :indeterminate="someColumnsSelected" hide-details
                   density="compact" class="mt-0 flex-shrink-0" @update:model-value="toggleAllColumns" />
                 <v-text-field v-model="columnSearch" prepend-inner-icon="mdi-magnify" hide-details density="compact"
-                  clearable variant="solo-filled" class="flex-grow-1" placeholder="جستجو..." />
+                  clearable variant="solo-filled" class="flex-grow-1" :placeholder="columnSearchPlaceholder" />
 
               </div>
               <v-divider class="mt-2" />
@@ -133,11 +133,12 @@ interface Props {
   singleExpand?: boolean
   rowProps?: (context: RowPropsContext) => Record<string, any>
   menuWidth?: number | string
+  columnSearchPlaceholder?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
   pageSize: 20,
-  resizeDirection: 'rtl',
+  resizeDirection: 'ltr',
   items: () => [],
   headers: () => [],
   loading: false,
@@ -148,6 +149,7 @@ const props = withDefaults(defineProps<Props>(), {
   showExpand: false,
   singleExpand: true,
   menuWidth: 320,
+  columnSearchPlaceholder: 'search...',
 })
 
 const toggleHeaders = ref<GenericTableColumn[]>([...props.headers]);

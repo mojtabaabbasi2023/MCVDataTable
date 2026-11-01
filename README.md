@@ -107,6 +107,14 @@ Set the width of the column visibility menu. Accepts a number (pixels) or a CSS 
 <MCVDataTable :headers="headers" :items="items" menu-width="420" />
 ```
 
+### `columnSearchPlaceholder`
+
+Set the placeholder text of the search field inside the column visibility menu. Defaults to `'جستجو...'`.
+
+```vue
+<MCVDataTable :headers="headers" :items="items" column-search-placeholder="Search columns..." />
+```
+
 ## Notes
 
 This package expects Vuetify to be installed and configured in the consuming Vue application.
