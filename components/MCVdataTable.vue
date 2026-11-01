@@ -25,7 +25,7 @@
                 <v-checkbox :model-value="allColumnsSelected" :indeterminate="someColumnsSelected" hide-details
                   density="compact" class="mt-0 flex-shrink-0" @update:model-value="toggleAllColumns" />
                 <v-text-field v-model="columnSearch" prepend-inner-icon="mdi-magnify" hide-details density="compact"
-                  clearable variant="solo-filled" class="flex-grow-1" :placeholder="columnSearchPlaceholder" />
+                  clearable variant="outlined" class="flex-grow-1" :placeholder="columnSearchPlaceholder" />
 
               </div>
               <v-divider class="mt-2" />
