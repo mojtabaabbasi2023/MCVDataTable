@@ -80,7 +80,7 @@ type DemoItem = {
 const activeItemValue = 2
 
 const headers: DemoHeader[] = [
-  { title: 'Title', key: 'title', group: 'main' },
+  { title: 'Title', key: 'title', group: 'main',hide:true },
   { title: 'Category', key: 'category', width: 150, group: 'main' },
   { title: 'Status', key: 'status', width: 140, group: 'workflow' },
   { title: 'Owner', key: 'owner', width: 160, group: 'workflow' },

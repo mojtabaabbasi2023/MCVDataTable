@@ -14,11 +14,15 @@ export function useTableColumns<T extends TableColumnWithVisibility = TableColum
   defaultWidth = 200,
 ) {
   const columnSearch = ref('');
-  const visibleColumns: Ref<string[]> = ref(
-    toggleHeaders.value
+
+  // ستون‌های پیش‌فرض = ستون‌هایی که در هدرهای ورودی `hide` نشده‌اند
+  function getDefaultVisibleColumnKeys(): string[] {
+    return toggleHeaders.value
       .filter(header => !header.hide)
-      .map(header => header.key)
-  );
+      .map(header => header.key);
+  }
+
+  const visibleColumns: Ref<string[]> = ref(getDefaultVisibleColumnKeys());
 
   const filteredToggleHeaders = computed<T[]>(() => {
     const query = columnSearch.value.trim().toLowerCase();
@@ -56,6 +60,11 @@ export function useTableColumns<T extends TableColumnWithVisibility = TableColum
       const allKeys = toggleHeaders.value.map(col => col.key);
       visibleColumns.value = [...new Set([...visibleColumns.value, ...allKeys])];
     }
+  }
+
+  // بازگرداندن نمایش ستون‌ها به حالت پیش‌فرض
+  function resetToDefaultColumns() {
+    visibleColumns.value = getDefaultVisibleColumnKeys();
   }
 
   function getHeaderCells() {
@@ -100,6 +109,7 @@ export function useTableColumns<T extends TableColumnWithVisibility = TableColum
     filteredHeaders,
     allColumnsSelected,
     someColumnsSelected,
-    toggleAllColumns
+    toggleAllColumns,
+    resetToDefaultColumns
   };
 }
