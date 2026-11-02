@@ -107,12 +107,19 @@ Set the width of the column visibility menu. Accepts a number (pixels) or a CSS 
 <MCVDataTable :headers="headers" :items="items" menu-width="420" />
 ```
 
-### `columnSearchPlaceholder`
+### `translations`
 
-Set the placeholder text of the search field inside the column visibility menu. Defaults to `'جستجو...'`.
+Pass translated text for controls in the column visibility menu. Both values are optional; the search placeholder defaults to `'search...'` and the reset button title defaults to `'نمایش ستون‌های پیش‌فرض'`.
 
 ```vue
-<MCVDataTable :headers="headers" :items="items" column-search-placeholder="Search columns..." />
+<MCVDataTable
+  :headers="headers"
+  :items="items"
+  :translations="{
+    columnSearchPlaceholder: 'Search columns...',
+    resetToDefaultColumnsTitle: 'Show default columns'
+  }"
+/>
 ```
 
 ## Notes

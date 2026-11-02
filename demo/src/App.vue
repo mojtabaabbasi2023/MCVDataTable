@@ -33,6 +33,7 @@
           class="demo-table"
           resize-direction="ltr"
           menu-width="420"
+          :translations="tableTranslations"
         >
           <template #item.status="{ item }">
             <v-chip :color="statusColor(item.status)" size="small" variant="flat">
@@ -78,6 +79,11 @@ type DemoItem = {
 }
 
 const activeItemValue = 2
+
+const tableTranslations = {
+  columnSearchPlaceholder: 'Search columns...',
+  resetToDefaultColumnsTitle: 'Show default columns',
+}
 
 const headers: DemoHeader[] = [
   { title: 'Title', key: 'title', group: 'main',hide:true },

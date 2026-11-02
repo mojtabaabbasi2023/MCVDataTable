@@ -25,12 +25,14 @@
                 <v-checkbox :model-value="allColumnsSelected" :indeterminate="someColumnsSelected" hide-details
                   density="compact" class="mt-0 flex-shrink-0" @update:model-value="toggleAllColumns" />
 
-                <v-btn icon variant="text" @click="resetToDefaultColumns">
+                <v-btn icon variant="text" :title="resolvedTranslations.resetToDefaultColumnsTitle"
+                  @click="resetToDefaultColumns">
                   <v-icon>mdi-refresh</v-icon>
                 </v-btn>
 
                 <v-text-field v-model="columnSearch" prepend-inner-icon="mdi-magnify" hide-details density="compact"
-                  clearable variant="outlined" class="flex-grow-1" :placeholder="columnSearchPlaceholder" />
+                  clearable variant="outlined" class="flex-grow-1"
+                  :placeholder="resolvedTranslations.columnSearchPlaceholder" />
 
               </div>
               <v-divider class="mt-2" />
@@ -123,6 +125,11 @@ type RowPropsContext = {
   index: number
 }
 
+type MCVDataTableTranslations = {
+  columnSearchPlaceholder?: string
+  resetToDefaultColumnsTitle?: string
+}
+
 interface Props {
   items: DataTableItem[]
   headers: GenericTableColumn[]
@@ -138,7 +145,7 @@ interface Props {
   singleExpand?: boolean
   rowProps?: (context: RowPropsContext) => Record<string, any>
   menuWidth?: number | string
-  columnSearchPlaceholder?: string
+  translations?: MCVDataTableTranslations
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -154,8 +161,14 @@ const props = withDefaults(defineProps<Props>(), {
   showExpand: false,
   singleExpand: true,
   menuWidth: 320,
-  columnSearchPlaceholder: 'search...',
 })
+
+const resolvedTranslations = computed(() => ({
+  columnSearchPlaceholder:
+    props.translations?.columnSearchPlaceholder ?? 'search...',
+  resetToDefaultColumnsTitle:
+    props.translations?.resetToDefaultColumnsTitle ?? 'Show default columns',
+}))
 
 const toggleHeaders = ref<GenericTableColumn[]>([...props.headers]);
 const tableHeaders = ref<GenericTableColumn[]>([...props.headers]);
